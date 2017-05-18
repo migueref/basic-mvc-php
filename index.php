@@ -65,7 +65,15 @@
         <h2 class ="white-text">Registrar nuevo producto</h2>
         <input type="text" class="form-control" id="nombre" value="" placeholder="Escribe el nombre del producto "><br>
         <input type="number" class="form-control" id="precio" value="" placeholder="Escribe el precio del producto "><br>
-        <input type="text" class="form-control" id="categoria" value="" placeholder="Escribe el categoría del producto "><br>
+        <select id="categoria" class="form-control" name="">
+					<option value="1">Pizzas</option>
+					<option value="2">Pastas</option>
+					<option value="3">Ensaladas</option>
+        	<option value="4">Bebidas</option>
+        </select><br>
+				<textarea class="form-control" id="descripcion"></textarea>
+				<br>
+
         <button type="button" class="form-control" id="guardar">Guardar producto</button>
       </div>
     </div>
@@ -77,13 +85,13 @@
       guardar.addEventListener('click',function(){
         let nombre = document.querySelector("#nombre");
         let precio = document.querySelector("#precio");
-        let categoria = document.querySelector("#categoria");
+				let categoria = document.querySelector("#categoria");
+        let descripcion = document.querySelector("#descripcion");
 
 
 
-        let producto = new Producto(nombre.value,precio.value,categoria.value);
+        let producto = new Producto(nombre.value,precio.value,categoria.value,descripcion.value);
 				let listaproductos = new Array();
-				listaproductos.push(producto);
 				listaproductos.push(producto);
 				let arregloJSON = JSON.stringify(listaproductos);
 				console.log(arregloJSON);

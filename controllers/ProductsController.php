@@ -2,7 +2,7 @@
 
 if( isset($_POST['funcion']) ) {
 	echo 'Hola AJAX '.$_POST['funcion'];
-	
+
 } else {
 	include_once("models/Model.php");
 }

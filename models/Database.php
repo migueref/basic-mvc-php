@@ -33,8 +33,7 @@
 		}
 		function query($sql){
 			$this->connect();
-			//$sql = eregi_replace("[\n|\r|\n\r]", ' ', $sql);
-			//$sql = $this->mysqli->real_escape_string($sql);
+			$sql = $this->mysqli->real_escape_string($sql);
 			if (!$query =$this->mysqli->query($sql)) {
 				$mensaje .="Error with MySQL connection. \n";
 				$mensaje .= "Errno: " . $this->mysqli->error . "\n";
