@@ -1,8 +1,8 @@
 <?php
 class Cleaner {
 	public function __construct() {
-
 	}
+	
 	static function cleanInput($input) {
 		$input  =addslashes(trim($input));
 	  	$search =array(
