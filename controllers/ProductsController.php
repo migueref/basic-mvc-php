@@ -1,5 +1,11 @@
 <?php
-include_once("models/Model.php");
+
+if( isset($_POST['funcion']) ) {
+	echo 'Hola AJAX '.$_POST['funcion'];
+	
+} else {
+	include_once("models/Model.php");
+}
 
 class ProductController {
 	public $model;
