@@ -11,4 +11,7 @@ class Product {
 	    $this->category = $category;
 	    $this->description = $description;
   }
+	//mysqli->insert_id
+	// return rows
+
 }
