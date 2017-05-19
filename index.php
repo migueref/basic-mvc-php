@@ -1,6 +1,5 @@
 <?php
 	include_once("controllers/ProductsController.php");
-	$products = new ProductController();
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,9 +55,18 @@
       <video class="video" src="./public/video.mp4" autoplay loop="">
       </video>
     </div>
-		<?php
-			$products->index();
-		?>
+		<!-- FORMULARIO PARA MOSTRAR LOS PRODUCTOS REGISTRADOS -->
+		<div class="front absolute card col-xs-12">
+			<select class="form-control" name="">
+				<?php
+					foreach ($productos as $producto) {
+				?>
+						<option value=""><?php echo $producto['nombre']; ?></option>
+				<?php
+					}
+				?>
+			</select>
+		</div>
     <!-- FORMULARIO PARA INGRESAR PRODUCTOS -->
     <div class="video-container vertical-center">
       <div class="front absolute card col-xs-12">
