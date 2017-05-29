@@ -52,67 +52,67 @@
         </div><!-- /.container-fluid -->
       </nav>
     </header>
-    <div class="video-container">
-      <video class="video" src="./public/video.mp4" autoplay loop="">
-      </video>
-    </div>
-		<!-- FORMULARIO PARA MOSTRAR LOS PRODUCTOS REGISTRADOS -->
-		<div class="front absolute card col-xs-12">
-			<select class="form-control" name="">
+		<div class="col-xs-12">
+			<h2 class ="white-text">Registrar nuevo pedido</h2>
+			<?php
+				$temporal = "";
+			?>
+
 				<?php
 					foreach ($productos as $producto) {
 				?>
-						<option value=""><?php echo $producto['nombre']; ?></option>
+					<div class="col-md-3">
+						<img src="https://super.walmart.com.mx/images/product-images/img_small/00003700008886s.jpg" class="col-xs-12">
+						<form id="<?php echo $producto['id']; ?>" action="index.html" method="post">
+							<span><?php echo $producto['descripcion']; ?></span>
+							<input type="text" class="col-xs-12" name="" value="<?php echo $producto['id']; ?>">
+							<input type="number" id="cantidad" onchange="document.getElementById('cantidad').value=this.value" class="input col-xs-12">
+							<button onclick="addToCart(
+																					<?php echo $producto['id']?>
+																				)" type="button" id="AddCart" class="col-xs-12 btn btn-alert">Agregar al carrito</button>
+						</form>
+
+					</div>
 				<?php
+
 					}
 				?>
-			</select>
-		</div>
-    <!-- FORMULARIO PARA INGRESAR PRODUCTOS -->
-    <div class="video-container vertical-center">
-      <div class="front absolute card col-xs-12">
-        <h2 class ="white-text">Registrar nuevo producto</h2>
-        <input type="text" class="form-control" id="nombre" value="" placeholder="Escribe el nombre del producto "><br>
-        <input type="number" class="form-control" id="precio" value="" placeholder="Escribe el precio del producto "><br>
-        <select id="categoria" class="form-control" name="">
-					<option value="1">Pizzas</option>
-					<option value="2">Pastas</option>
-					<option value="3">Ensaladas</option>
-        	<option value="4">Bebidas</option>
-        </select><br>
-				<textarea class="form-control" id="descripcion"></textarea>
-				<br>
 
-        <button type="button" class="form-control" id="guardar">Guardar producto</button>
-      </div>
-    </div>
+
+			<br>
+
+			<button type="button" class="form-control" id="guardar">Hacer pedido</button>
+		</div>
+
+
+
 
     <!-- container -->
     <script src="./assets/js/script.js" charset="utf-8"></script>
     <script type="text/javascript">
+		let addCart = document.querySelector("#addCart");
       let guardar = document.querySelector("#guardar");
-      guardar.addEventListener('click',function(){
-        let nombre = document.querySelector("#nombre");
-        let precio = document.querySelector("#precio");
-				let categoria = document.querySelector("#categoria");
-        let descripcion = document.querySelector("#descripcion");
+			let carrito = new Array()
+			function addToCart(value) {
+				let idProducto = value;
+				let cantidad = document.querySelector("#cantidad");
+
+				if(cantidad.value) {
+					console.log("idProducto" +idProducto+ " cantidad: "+cantidad.value)
+					carrito.push(idProducto)
+				}else{
+					console.log("no se hac")
+				}
 
 
+				$(".input").val("");
+			}
+			if(guardar) {
+				guardar.addEventListener('click',function(){
+					console.log(carrito)
+	      });
+			}
 
-        let producto = new Producto(nombre.value,precio.value,categoria.value,descripcion.value);
-				let listaproductos = new Array();
-				listaproductos.push(producto);
-				let arregloJSON = JSON.stringify(listaproductos);
-				console.log(arregloJSON);
-				$.ajax({
-				  method: "POST",
-				  url: "controllers/ProductsController.php",
-				  data: { productos: arregloJSON, funcion: "insertarProductos" }
-				})
-				.done(function() {
-				   console.log( "Datos guardados ");
-				 });
-      });
 
     </script>
   </body>

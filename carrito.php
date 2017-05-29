@@ -52,68 +52,70 @@
         </div><!-- /.container-fluid -->
       </nav>
     </header>
-    <div class="video-container">
-      <video class="video" src="./public/video.mp4" autoplay loop="">
-      </video>
-    </div>
-		<!-- FORMULARIO PARA MOSTRAR LOS PRODUCTOS REGISTRADOS -->
-		<div class="front absolute card col-xs-12">
-			<select class="form-control" name="">
-				<?php
-					foreach ($productos as $producto) {
-				?>
-						<option value=""><?php echo $producto['nombre']; ?></option>
-				<?php
-					}
-				?>
-			</select>
-		</div>
-    <!-- FORMULARIO PARA INGRESAR PRODUCTOS -->
-    <div class="video-container vertical-center">
-      <div class="front absolute card col-xs-12">
-        <h2 class ="white-text">Registrar nuevo producto</h2>
-        <input type="text" class="form-control" id="nombre" value="" placeholder="Escribe el nombre del producto "><br>
-        <input type="number" class="form-control" id="precio" value="" placeholder="Escribe el precio del producto "><br>
-        <select id="categoria" class="form-control" name="">
-					<option value="1">Pizzas</option>
-					<option value="2">Pastas</option>
-					<option value="3">Ensaladas</option>
-        	<option value="4">Bebidas</option>
-        </select><br>
-				<textarea class="form-control" id="descripcion"></textarea>
-				<br>
 
-        <button type="button" class="form-control" id="guardar">Guardar producto</button>
-      </div>
-    </div>
+		<!-- FORMULARIO PARA MOSTRAR LOS PRODUCTOS REGISTRADOS -->
+
+			<?php
+				foreach ($productos as $producto) {
+			?>
+				<div class="col-md-3">
+					<img src="./public/1.jpg" alt="">
+					<h4><?php echo $producto['nombre'];?></h4>
+					<p><?php echo $producto['descripcion'];?></p>
+					<h5>$<?php echo $producto['precio'];?></h5>
+					<input type="number" class="cantidad" id="cantidad" placeholder="Cantidad" onchange="document.getElementById('cantidad').value=this.value">
+					<button type="button" class="btn btn-danger form-control"
+					 					id="carrito" onclick="agregarCarrito(<?php echo $producto['id'];?>)">Agregar al carrito</button>
+				</div>
+
+			<?php
+				}
+			?>
+			<h2>datos del pedido</h2>
+			<input type="text" id="nombre" placeholder="nombre">
+			<input type="text" id="direccion" placeholder="dirección">
+			<input type="text" id="telefono" placeholder="teléfono">
+			<button type="button" name="button" onclick="realizarPedido()">Realizar pedido</button>
+
 
     <!-- container -->
-    <script src="./assets/js/script.js" charset="utf-8"></script>
+		<script src="./assets/js/script.js" charset="utf-8"></script>
+    <script src="./assets/js/carrito.js" charset="utf-8"></script>
     <script type="text/javascript">
-      let guardar = document.querySelector("#guardar");
-      guardar.addEventListener('click',function(){
-        let nombre = document.querySelector("#nombre");
-        let precio = document.querySelector("#precio");
-				let categoria = document.querySelector("#categoria");
-        let descripcion = document.querySelector("#descripcion");
+			var listaproductos = new Array();
+			function realizarPedido() {
+				let nombre = document.querySelector("#nombre");
+				let telefono = document.querySelector("#telefono");
+				let direccion = document.querySelector("#direccion");
 
-
-
-        let producto = new Producto(nombre.value,precio.value,categoria.value,descripcion.value);
-				let listaproductos = new Array();
-				listaproductos.push(producto);
 				let arregloJSON = JSON.stringify(listaproductos);
 				console.log(arregloJSON);
 				$.ajax({
 				  method: "POST",
-				  url: "controllers/ProductsController.php",
-				  data: { productos: arregloJSON, funcion: "insertarProductos" }
+				  url: "controllers/CarritoController.php",
+				  data: { productos: arregloJSON,
+									nombre: nombre.value,
+									direccion: direccion.value,
+						 			telefono: telefono.value,
+									funcion: "agregarCarrito"
+								}
 				})
 				.done(function() {
 				   console.log( "Datos guardados ");
 				 });
-      });
 
+			}
+			function agregarCarrito(idProducto) {
+				console.log("asda")
+				let cantidad = document.querySelector("#cantidad");
+				// listaproductos.push()
+				let carrito = new Carrito(idProducto,cantidad.value);
+				listaproductos.push(carrito);
+
+				console.log(listaproductos)
+				$(".input").val("");//jquery
+
+			}
     </script>
   </body>
 </html>
